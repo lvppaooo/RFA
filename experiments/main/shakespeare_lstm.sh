@@ -5,8 +5,8 @@
 
 outf="outputs/outputs_shakespeare_avg"
 logf="outputs/log_shakespeare_avg"
-num_rounds=600
-batch_size=8
+num_rounds=100
+batch_size=100
 num_epochs=1
 clients_per_round=25
 lr=0.64

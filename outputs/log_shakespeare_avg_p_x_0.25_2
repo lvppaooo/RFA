@@ -1,0 +1,337 @@
+2020-06-03 07:27:14.285110: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-03 07:27:14.317062: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2099905000 Hz
+2020-06-03 07:27:14.319617: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x55635481d3d0 executing computations on platform Host. Devices:
+2020-06-03 07:27:14.319658: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+2020-06-03 07:27:14.505712: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
+name: GeForce GTX 1070 major: 6 minor: 1 memoryClockRate(GHz): 1.7845
+pciBusID: 0000:02:00.0
+totalMemory: 7.92GiB freeMemory: 7.53GiB
+2020-06-03 07:27:14.505760: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2020-06-03 07:27:14.506781: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-06-03 07:27:14.506795: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2020-06-03 07:27:14.506802: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2020-06-03 07:27:14.507221: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7321 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1070, pci bus id: 0000:02:00.0, compute capability: 6.1)
+2020-06-03 07:27:14.509028: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x556354bff1e0 executing computations on platform CUDA. Devices:
+2020-06-03 07:27:14.509062: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): GeForce GTX 1070, Compute Capability 6.1
+2020-06-03 07:27:15.619665: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2020-06-03 07:27:15.619730: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-06-03 07:27:15.619739: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2020-06-03 07:27:15.619745: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2020-06-03 07:27:15.619913: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7321 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1070, pci bus id: 0000:02:00.0, compute capability: 6.1)
+2020-06-03 07:27:19.379243: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+Please specify a valid dataset and a valid model.
+############################## shakespeare.stacked_lstm ##############################
+Namespace(aggregation='mean', batch_size=100, clients_per_round=25, corruption='p_x', data_dir='data', dataset='shakespeare', decay_lr_every=50, eval_every=20, fraction_corrupt=0.25, lr=0.64, lr_decay=2.0, minibatch=None, model='stacked_lstm', no_logging=False, num_epochs=1, num_rounds=100, output_summary_file='outputs/outputs_shakespeare_avg_p_x_0.25_2', patience_iter=20, seed=2, validation=False, weiszfeld_maxiter=4)
+Corrupting 0.2508 fraction of data
+#Clients = 1089 ; setup time = 0:00:04
+Using true labels for corrupted data as well
+0, train_loss: 3.96777, train_accuracy: 0.0382812, test_loss: 3.96779, test_accuracy: 0.0381804, Time: 0:02:20
+--- Round 1 of 100: Training 25 Clients ---
+			Corrupted 0 out of 25 clients. 0.000 fraction
+			Round: 1 AvgLoss: 3.050 Norm: 18.06 Time: 0:00:21 Tot_time 0:02:45
+--- Round 2 of 100: Training 25 Clients ---
+			Corrupted 0 out of 25 clients. 0.000 fraction
+			Round: 2 AvgLoss: 2.757 Norm: 19.65 Time: 0:00:28 Tot_time 0:03:14
+--- Round 3 of 100: Training 25 Clients ---
+			Corrupted 3 out of 25 clients. 0.214 fraction
+			Round: 3 AvgLoss: 2.595 Norm: 20.60 Time: 0:00:28 Tot_time 0:03:41
+--- Round 4 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.026 fraction
+			Round: 4 AvgLoss: 2.460 Norm: 22.00 Time: 0:00:35 Tot_time 0:04:16
+--- Round 5 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.205 fraction
+			Round: 5 AvgLoss: 2.452 Norm: 22.69 Time: 0:00:24 Tot_time 0:04:40
+5, train_loss: 2.36829, train_accuracy: 0.331415, test_loss: 2.36859, test_accuracy: 0.330338, Time: 0:02:18
+--- Round 6 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.148 fraction
+			Round: 6 AvgLoss: 2.403 Norm: 23.65 Time: 0:00:27 Tot_time 0:07:25
+--- Round 7 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.171 fraction
+			Round: 7 AvgLoss: 2.361 Norm: 24.33 Time: 0:00:27 Tot_time 0:07:52
+--- Round 8 of 100: Training 25 Clients ---
+			Corrupted 7 out of 25 clients. 0.139 fraction
+			Round: 8 AvgLoss: 2.356 Norm: 24.97 Time: 0:00:14 Tot_time 0:08:06
+--- Round 9 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.118 fraction
+			Round: 9 AvgLoss: 2.311 Norm: 25.74 Time: 0:00:19 Tot_time 0:08:25
+--- Round 10 of 100: Training 25 Clients ---
+			Corrupted 13 out of 25 clients. 0.274 fraction
+			Round: 10 AvgLoss: 2.335 Norm: 26.53 Time: 0:00:23 Tot_time 0:08:47
+--- Round 11 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.223 fraction
+			Round: 11 AvgLoss: 2.310 Norm: 26.96 Time: 0:00:21 Tot_time 0:09:08
+--- Round 12 of 100: Training 25 Clients ---
+			Corrupted 12 out of 25 clients. 0.448 fraction
+			Round: 12 AvgLoss: 2.380 Norm: 27.29 Time: 0:00:19 Tot_time 0:09:27
+--- Round 13 of 100: Training 25 Clients ---
+			Corrupted 2 out of 25 clients. 0.050 fraction
+			Round: 13 AvgLoss: 2.180 Norm: 28.60 Time: 0:00:23 Tot_time 0:09:50
+--- Round 14 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.253 fraction
+			Round: 14 AvgLoss: 2.265 Norm: 28.86 Time: 0:00:16 Tot_time 0:10:06
+--- Round 15 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.377 fraction
+			Round: 15 AvgLoss: 2.251 Norm: 29.22 Time: 0:00:20 Tot_time 0:10:26
+--- Round 16 of 100: Training 25 Clients ---
+			Corrupted 2 out of 25 clients. 0.032 fraction
+			Round: 16 AvgLoss: 2.110 Norm: 30.07 Time: 0:00:26 Tot_time 0:10:52
+--- Round 17 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.087 fraction
+			Round: 17 AvgLoss: 2.106 Norm: 30.82 Time: 0:00:31 Tot_time 0:11:23
+--- Round 18 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.086 fraction
+			Round: 18 AvgLoss: 2.102 Norm: 31.44 Time: 0:00:23 Tot_time 0:11:45
+--- Round 19 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.185 fraction
+			Round: 19 AvgLoss: 2.138 Norm: 31.72 Time: 0:00:12 Tot_time 0:11:58
+--- Round 20 of 100: Training 25 Clients ---
+			Corrupted 2 out of 25 clients. 0.040 fraction
+			Round: 20 AvgLoss: 2.017 Norm: 32.23 Time: 0:00:23 Tot_time 0:12:20
+20, train_loss: 2.00292, train_accuracy: 0.423072, test_loss: 2.00127, test_accuracy: 0.422778, Time: 0:02:19
+--- Round 21 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.317 fraction
+			Round: 21 AvgLoss: 2.148 Norm: 32.44 Time: 0:00:15 Tot_time 0:14:55
+--- Round 22 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.192 fraction
+			Round: 22 AvgLoss: 2.064 Norm: 33.66 Time: 0:00:32 Tot_time 0:15:26
+--- Round 23 of 100: Training 25 Clients ---
+			Corrupted 3 out of 25 clients. 0.023 fraction
+			Round: 23 AvgLoss: 2.002 Norm: 33.93 Time: 0:00:16 Tot_time 0:15:43
+--- Round 24 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.056 fraction
+			Round: 24 AvgLoss: 1.984 Norm: 34.51 Time: 0:00:24 Tot_time 0:16:07
+--- Round 25 of 100: Training 25 Clients ---
+			Corrupted 3 out of 25 clients. 0.165 fraction
+			Round: 25 AvgLoss: 2.034 Norm: 34.93 Time: 0:00:32 Tot_time 0:16:39
+--- Round 26 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.042 fraction
+			Round: 26 AvgLoss: 1.972 Norm: 35.26 Time: 0:00:17 Tot_time 0:16:56
+--- Round 27 of 100: Training 25 Clients ---
+			Corrupted 7 out of 25 clients. 0.160 fraction
+			Round: 27 AvgLoss: 2.006 Norm: 35.82 Time: 0:00:22 Tot_time 0:17:18
+--- Round 28 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.150 fraction
+			Round: 28 AvgLoss: 2.034 Norm: 36.08 Time: 0:00:20 Tot_time 0:17:38
+--- Round 29 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.242 fraction
+			Round: 29 AvgLoss: 2.048 Norm: 36.45 Time: 0:00:27 Tot_time 0:18:04
+--- Round 30 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.094 fraction
+			Round: 30 AvgLoss: 1.972 Norm: 36.73 Time: 0:00:14 Tot_time 0:18:18
+--- Round 31 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.538 fraction
+			Round: 31 AvgLoss: 2.197 Norm: 36.86 Time: 0:00:13 Tot_time 0:18:31
+--- Round 32 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.126 fraction
+			Round: 32 AvgLoss: 1.949 Norm: 37.38 Time: 0:00:26 Tot_time 0:18:57
+--- Round 33 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.417 fraction
+			Round: 33 AvgLoss: 2.089 Norm: 37.74 Time: 0:00:22 Tot_time 0:19:19
+--- Round 34 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.792 fraction
+			Round: 34 AvgLoss: 2.133 Norm: 39.25 Time: 0:00:23 Tot_time 0:19:42
+--- Round 35 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.228 fraction
+			Round: 35 AvgLoss: 2.031 Norm: 39.45 Time: 0:00:23 Tot_time 0:20:05
+--- Round 36 of 100: Training 25 Clients ---
+			Corrupted 10 out of 25 clients. 0.259 fraction
+			Round: 36 AvgLoss: 1.992 Norm: 39.87 Time: 0:00:24 Tot_time 0:20:29
+--- Round 37 of 100: Training 25 Clients ---
+			Corrupted 2 out of 25 clients. 0.165 fraction
+			Round: 37 AvgLoss: 1.903 Norm: 40.29 Time: 0:00:26 Tot_time 0:20:54
+--- Round 38 of 100: Training 25 Clients ---
+			Corrupted 12 out of 25 clients. 0.176 fraction
+			Round: 38 AvgLoss: 1.947 Norm: 40.82 Time: 0:00:41 Tot_time 0:21:35
+--- Round 39 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.133 fraction
+			Round: 39 AvgLoss: 1.892 Norm: 41.14 Time: 0:00:22 Tot_time 0:21:57
+--- Round 40 of 100: Training 25 Clients ---
+			Corrupted 13 out of 25 clients. 0.543 fraction
+			Round: 40 AvgLoss: 2.026 Norm: 41.38 Time: 0:00:18 Tot_time 0:22:15
+40, train_loss: 2.4012, train_accuracy: 0.330518, test_loss: 2.40297, test_accuracy: 0.330233, Time: 0:02:21
+--- Round 41 of 100: Training 25 Clients ---
+			Corrupted 10 out of 25 clients. 0.481 fraction
+			Round: 41 AvgLoss: 1.996 Norm: 41.74 Time: 0:00:21 Tot_time 0:24:57
+--- Round 42 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.328 fraction
+			Round: 42 AvgLoss: 1.948 Norm: 42.08 Time: 0:00:22 Tot_time 0:25:20
+--- Round 43 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.159 fraction
+			Round: 43 AvgLoss: 1.911 Norm: 42.48 Time: 0:00:39 Tot_time 0:25:59
+--- Round 44 of 100: Training 25 Clients ---
+			Corrupted 10 out of 25 clients. 0.214 fraction
+			Round: 44 AvgLoss: 1.923 Norm: 42.72 Time: 0:00:13 Tot_time 0:26:12
+--- Round 45 of 100: Training 25 Clients ---
+			Corrupted 10 out of 25 clients. 0.317 fraction
+			Round: 45 AvgLoss: 1.924 Norm: 42.86 Time: 0:00:16 Tot_time 0:26:27
+--- Round 46 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.023 fraction
+			Round: 46 AvgLoss: 1.879 Norm: 43.32 Time: 0:00:23 Tot_time 0:26:51
+--- Round 47 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.202 fraction
+			Round: 47 AvgLoss: 1.890 Norm: 43.44 Time: 0:00:13 Tot_time 0:27:04
+--- Round 48 of 100: Training 25 Clients ---
+			Corrupted 2 out of 25 clients. 0.008 fraction
+			Round: 48 AvgLoss: 1.824 Norm: 43.74 Time: 0:00:17 Tot_time 0:27:21
+--- Round 49 of 100: Training 25 Clients ---
+			Corrupted 12 out of 25 clients. 0.522 fraction
+			Round: 49 AvgLoss: 2.080 Norm: 43.74 Time: 0:00:10 Tot_time 0:27:30
+--- Round 50 of 100: Training 25 Clients ---
+			Corrupted 10 out of 25 clients. 0.285 fraction
+			Round: 50 AvgLoss: 1.922 Norm: 44.08 Time: 0:00:21 Tot_time 0:27:51
+--- Round 51 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.271 fraction
+			Round: 51 AvgLoss: 1.865 Norm: 44.24 Time: 0:00:26 Tot_time 0:28:17
+--- Round 52 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.703 fraction
+			Round: 52 AvgLoss: 2.056 Norm: 44.36 Time: 0:00:11 Tot_time 0:28:28
+--- Round 53 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.386 fraction
+			Round: 53 AvgLoss: 1.885 Norm: 44.62 Time: 0:00:24 Tot_time 0:28:52
+--- Round 54 of 100: Training 25 Clients ---
+			Corrupted 7 out of 25 clients. 0.340 fraction
+			Round: 54 AvgLoss: 1.878 Norm: 44.76 Time: 0:00:25 Tot_time 0:29:17
+--- Round 55 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.152 fraction
+			Round: 55 AvgLoss: 1.813 Norm: 44.92 Time: 0:00:21 Tot_time 0:29:39
+--- Round 56 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.207 fraction
+			Round: 56 AvgLoss: 1.856 Norm: 45.06 Time: 0:00:22 Tot_time 0:30:00
+--- Round 57 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.201 fraction
+			Round: 57 AvgLoss: 1.836 Norm: 45.28 Time: 0:00:30 Tot_time 0:30:31
+--- Round 58 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.233 fraction
+			Round: 58 AvgLoss: 1.860 Norm: 45.39 Time: 0:00:20 Tot_time 0:30:50
+--- Round 59 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.519 fraction
+			Round: 59 AvgLoss: 1.932 Norm: 45.59 Time: 0:00:17 Tot_time 0:31:07
+--- Round 60 of 100: Training 25 Clients ---
+			Corrupted 15 out of 25 clients. 0.401 fraction
+			Round: 60 AvgLoss: 1.891 Norm: 45.71 Time: 0:00:19 Tot_time 0:31:26
+60, train_loss: 1.85965, train_accuracy: 0.464959, test_loss: 1.85946, test_accuracy: 0.465256, Time: 0:02:19
+--- Round 61 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.133 fraction
+			Round: 61 AvgLoss: 1.792 Norm: 45.84 Time: 0:00:21 Tot_time 0:34:06
+--- Round 62 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.444 fraction
+			Round: 62 AvgLoss: 1.880 Norm: 45.96 Time: 0:00:18 Tot_time 0:34:24
+--- Round 63 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.451 fraction
+			Round: 63 AvgLoss: 1.856 Norm: 46.16 Time: 0:00:27 Tot_time 0:34:51
+--- Round 64 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.180 fraction
+			Round: 64 AvgLoss: 1.821 Norm: 46.30 Time: 0:00:24 Tot_time 0:35:15
+--- Round 65 of 100: Training 25 Clients ---
+			Corrupted 10 out of 25 clients. 0.249 fraction
+			Round: 65 AvgLoss: 1.822 Norm: 46.42 Time: 0:00:20 Tot_time 0:35:35
+--- Round 66 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.132 fraction
+			Round: 66 AvgLoss: 1.784 Norm: 46.64 Time: 0:00:24 Tot_time 0:35:59
+--- Round 67 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.349 fraction
+			Round: 67 AvgLoss: 1.857 Norm: 46.71 Time: 0:00:11 Tot_time 0:36:11
+--- Round 68 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.282 fraction
+			Round: 68 AvgLoss: 1.800 Norm: 47.02 Time: 0:00:19 Tot_time 0:36:30
+--- Round 69 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.147 fraction
+			Round: 69 AvgLoss: 1.805 Norm: 47.10 Time: 0:00:17 Tot_time 0:36:47
+--- Round 70 of 100: Training 25 Clients ---
+			Corrupted 2 out of 25 clients. 0.081 fraction
+			Round: 70 AvgLoss: 1.785 Norm: 47.15 Time: 0:00:12 Tot_time 0:36:59
+--- Round 71 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.123 fraction
+			Round: 71 AvgLoss: 1.794 Norm: 47.31 Time: 0:00:19 Tot_time 0:37:18
+--- Round 72 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.197 fraction
+			Round: 72 AvgLoss: 1.840 Norm: 47.35 Time: 0:00:13 Tot_time 0:37:31
+--- Round 73 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.191 fraction
+			Round: 73 AvgLoss: 1.815 Norm: 47.43 Time: 0:00:10 Tot_time 0:37:42
+--- Round 74 of 100: Training 25 Clients ---
+			Corrupted 7 out of 25 clients. 0.261 fraction
+			Round: 74 AvgLoss: 1.819 Norm: 47.50 Time: 0:00:17 Tot_time 0:37:59
+--- Round 75 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.229 fraction
+			Round: 75 AvgLoss: 1.846 Norm: 47.60 Time: 0:00:13 Tot_time 0:38:11
+--- Round 76 of 100: Training 25 Clients ---
+			Corrupted 3 out of 25 clients. 0.061 fraction
+			Round: 76 AvgLoss: 1.753 Norm: 47.76 Time: 0:00:25 Tot_time 0:38:36
+--- Round 77 of 100: Training 25 Clients ---
+			Corrupted 3 out of 25 clients. 0.282 fraction
+			Round: 77 AvgLoss: 1.807 Norm: 47.91 Time: 0:00:26 Tot_time 0:39:02
+--- Round 78 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.276 fraction
+			Round: 78 AvgLoss: 1.803 Norm: 48.08 Time: 0:00:20 Tot_time 0:39:21
+--- Round 79 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.289 fraction
+			Round: 79 AvgLoss: 1.814 Norm: 48.18 Time: 0:00:22 Tot_time 0:39:43
+--- Round 80 of 100: Training 25 Clients ---
+			Corrupted 2 out of 25 clients. 0.050 fraction
+			Round: 80 AvgLoss: 1.732 Norm: 48.33 Time: 0:00:20 Tot_time 0:40:03
+80, train_loss: 1.73954, train_accuracy: 0.494756, test_loss: 1.73901, test_accuracy: 0.494429, Time: 0:02:19
+--- Round 81 of 100: Training 25 Clients ---
+			Corrupted 3 out of 25 clients. 0.060 fraction
+			Round: 81 AvgLoss: 1.783 Norm: 48.36 Time: 0:00:07 Tot_time 0:42:28
+--- Round 82 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.149 fraction
+			Round: 82 AvgLoss: 1.775 Norm: 48.46 Time: 0:00:23 Tot_time 0:42:51
+--- Round 83 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.328 fraction
+			Round: 83 AvgLoss: 1.811 Norm: 48.61 Time: 0:00:21 Tot_time 0:43:12
+--- Round 84 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.333 fraction
+			Round: 84 AvgLoss: 1.827 Norm: 48.77 Time: 0:00:32 Tot_time 0:43:44
+--- Round 85 of 100: Training 25 Clients ---
+			Corrupted 7 out of 25 clients. 0.072 fraction
+			Round: 85 AvgLoss: 1.760 Norm: 48.95 Time: 0:00:13 Tot_time 0:43:56
+--- Round 86 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.150 fraction
+			Round: 86 AvgLoss: 1.790 Norm: 49.07 Time: 0:00:14 Tot_time 0:44:11
+--- Round 87 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.543 fraction
+			Round: 87 AvgLoss: 1.887 Norm: 49.19 Time: 0:00:24 Tot_time 0:44:34
+--- Round 88 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.472 fraction
+			Round: 88 AvgLoss: 1.837 Norm: 49.31 Time: 0:00:26 Tot_time 0:45:00
+--- Round 89 of 100: Training 25 Clients ---
+			Corrupted 5 out of 25 clients. 0.147 fraction
+			Round: 89 AvgLoss: 1.763 Norm: 49.39 Time: 0:00:16 Tot_time 0:45:16
+--- Round 90 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.473 fraction
+			Round: 90 AvgLoss: 1.890 Norm: 49.44 Time: 0:00:15 Tot_time 0:45:32
+--- Round 91 of 100: Training 25 Clients ---
+			Corrupted 6 out of 25 clients. 0.310 fraction
+			Round: 91 AvgLoss: 1.813 Norm: 49.57 Time: 0:00:25 Tot_time 0:45:56
+--- Round 92 of 100: Training 25 Clients ---
+			Corrupted 10 out of 25 clients. 0.132 fraction
+			Round: 92 AvgLoss: 1.781 Norm: 49.74 Time: 0:00:28 Tot_time 0:46:24
+--- Round 93 of 100: Training 25 Clients ---
+			Corrupted 11 out of 25 clients. 0.359 fraction
+			Round: 93 AvgLoss: 1.815 Norm: 49.89 Time: 0:00:29 Tot_time 0:46:53
+--- Round 94 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.364 fraction
+			Round: 94 AvgLoss: 1.834 Norm: 49.98 Time: 0:00:15 Tot_time 0:47:09
+--- Round 95 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.155 fraction
+			Round: 95 AvgLoss: 1.729 Norm: 50.17 Time: 0:00:29 Tot_time 0:47:38
+--- Round 96 of 100: Training 25 Clients ---
+			Corrupted 4 out of 25 clients. 0.145 fraction
+			Round: 96 AvgLoss: 1.743 Norm: 50.23 Time: 0:00:19 Tot_time 0:47:57
+--- Round 97 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.181 fraction
+			Round: 97 AvgLoss: 1.742 Norm: 50.34 Time: 0:00:23 Tot_time 0:48:20
+--- Round 98 of 100: Training 25 Clients ---
+			Corrupted 9 out of 25 clients. 0.456 fraction
+			Round: 98 AvgLoss: 1.830 Norm: 50.40 Time: 0:00:18 Tot_time 0:48:38
+--- Round 99 of 100: Training 25 Clients ---
+			Corrupted 8 out of 25 clients. 0.255 fraction
+			Round: 99 AvgLoss: 1.782 Norm: 50.56 Time: 0:00:19 Tot_time 0:48:57
+--- Round 100 of 100: Training 25 Clients ---
+			Corrupted 7 out of 25 clients. 0.348 fraction
+			Round: 100 AvgLoss: 1.826 Norm: 50.61 Time: 0:00:13 Tot_time 0:49:10
+100, train_loss: 1.94461, train_accuracy: 0.442199, test_loss: 1.9456, test_accuracy: 0.441634, Time: 0:02:19
+checkpoints/outputs/outputs_shakespeare_avg_p_x_0.25_2
+Model saved in path: checkpoints/outputs/outputs_shakespeare_avg_p_x_0.25_2.ckpt in time 0.07 sec
+Job complete. Total time taken: 0:51:29

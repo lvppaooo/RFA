@@ -1,0 +1,122 @@
+2020-06-06 09:01:38.769003: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-06 09:01:38.801057: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2099905000 Hz
+2020-06-06 09:01:38.804086: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x55877fe0c920 executing computations on platform Host. Devices:
+2020-06-06 09:01:38.804135: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+2020-06-06 09:01:38.993697: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
+name: GeForce GTX 1070 major: 6 minor: 1 memoryClockRate(GHz): 1.7845
+pciBusID: 0000:02:00.0
+totalMemory: 7.92GiB freeMemory: 7.52GiB
+2020-06-06 09:01:38.993743: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2020-06-06 09:01:38.994680: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-06-06 09:01:38.994695: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2020-06-06 09:01:38.994702: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2020-06-06 09:01:38.995012: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7315 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1070, pci bus id: 0000:02:00.0, compute capability: 6.1)
+2020-06-06 09:01:38.996774: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x55877fe0c4a0 executing computations on platform CUDA. Devices:
+2020-06-06 09:01:38.996796: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): GeForce GTX 1070, Compute Capability 6.1
+2020-06-06 09:01:40.046676: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2020-06-06 09:01:40.046744: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-06-06 09:01:40.046753: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2020-06-06 09:01:40.046759: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2020-06-06 09:01:40.046923: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7315 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1070, pci bus id: 0000:02:00.0, compute capability: 6.1)
+2020-06-06 09:01:45.129947: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+Please specify a valid dataset and a valid model.
+############################## shakespeare.stacked_lstm ##############################
+Namespace(aggregation='geom_median', batch_size=8, clients_per_round=30, corruption='p_x', data_dir='data', dataset='shakespeare', decay_lr_every=50, eval_every=20, fraction_corrupt=0.25, lr=0.64, lr_decay=2.0, minibatch=None, model='stacked_lstm', no_logging=False, num_epochs=1, num_rounds=200, output_summary_file='outputs/outputs_shakespeare_gm_p_x_0.25_1', patience_iter=20, seed=1, validation=False, weiszfeld_maxiter=2)
+Corrupting 0.2518 fraction of data
+#Clients = 1089 ; setup time = 0:00:04
+Using true labels for corrupted data as well
+0, train_loss: 3.96937, train_accuracy: 0.0196821, test_loss: 3.96939, test_accuracy: 0.0194894, Time: 0:02:08
+--- Round 1 of 200: Training 30 Clients ---
+			Corrupted 0 out of 30 clients. 0.000 fraction
+			Round: 1 AvgLoss: 2.829 Norm: 21.70 Time: 0:03:09 Tot_time 0:05:21
+--- Round 2 of 200: Training 30 Clients ---
+			Corrupted 0 out of 30 clients. 0.000 fraction
+			Round: 2 AvgLoss: 2.444 Norm: 27.11 Time: 0:03:30 Tot_time 0:08:51
+--- Round 3 of 200: Training 30 Clients ---
+			Corrupted 5 out of 30 clients. 0.202 fraction
+			Round: 3 AvgLoss: 2.364 Norm: 30.09 Time: 0:03:14 Tot_time 0:12:04
+--- Round 4 of 200: Training 30 Clients ---
+			Corrupted 10 out of 30 clients. 0.372 fraction
+			Round: 4 AvgLoss: 2.349 Norm: 32.33 Time: 0:02:29 Tot_time 0:14:33
+--- Round 5 of 200: Training 30 Clients ---
+			Corrupted 12 out of 30 clients. 0.326 fraction
+			Round: 5 AvgLoss: 2.199 Norm: 41.62 Time: 0:06:03 Tot_time 0:20:37
+5, train_loss: 2.13182, train_accuracy: 0.383704, test_loss: 2.13067, test_accuracy: 0.384178, Time: 0:02:20
+--- Round 6 of 200: Training 30 Clients ---
+			Corrupted 9 out of 30 clients. 0.155 fraction
+			Round: 6 AvgLoss: 2.099 Norm: 44.54 Time: 0:03:05 Tot_time 0:26:02
+--- Round 7 of 200: Training 30 Clients ---
+			Corrupted 7 out of 30 clients. 0.285 fraction
+			Round: 7 AvgLoss: 2.090 Norm: 48.71 Time: 0:05:49 Tot_time 0:31:52
+--- Round 8 of 200: Training 30 Clients ---
+			Corrupted 16 out of 30 clients. 0.579 fraction
+			Round: 8 AvgLoss: 2.123 Norm: 50.61 Time: 0:05:02 Tot_time 0:36:53
+--- Round 9 of 200: Training 30 Clients ---
+			Corrupted 5 out of 30 clients. 0.138 fraction
+			Round: 9 AvgLoss: 2.001 Norm: 53.38 Time: 0:03:11 Tot_time 0:40:04
+--- Round 10 of 200: Training 30 Clients ---
+			Corrupted 11 out of 30 clients. 0.335 fraction
+			Round: 10 AvgLoss: 2.004 Norm: 55.25 Time: 0:04:30 Tot_time 0:44:34
+--- Round 11 of 200: Training 30 Clients ---
+			Corrupted 9 out of 30 clients. 0.173 fraction
+			Round: 11 AvgLoss: 1.968 Norm: 62.64 Time: 0:06:05 Tot_time 0:50:40
+--- Round 12 of 200: Training 30 Clients ---
+			Corrupted 10 out of 30 clients. 0.352 fraction
+			Round: 12 AvgLoss: 1.987 Norm: 63.66 Time: 0:03:46 Tot_time 0:54:25
+--- Round 13 of 200: Training 30 Clients ---
+			Corrupted 6 out of 30 clients. 0.492 fraction
+			Round: 13 AvgLoss: 1.980 Norm: 64.76 Time: 0:02:36 Tot_time 0:57:02
+--- Round 14 of 200: Training 30 Clients ---
+			Corrupted 8 out of 30 clients. 0.203 fraction
+			Round: 14 AvgLoss: 1.911 Norm: 67.20 Time: 0:04:35 Tot_time 1:01:37
+--- Round 15 of 200: Training 30 Clients ---
+			Corrupted 12 out of 30 clients. 0.412 fraction
+			Round: 15 AvgLoss: 1.961 Norm: 68.72 Time: 0:05:17 Tot_time 1:06:53
+--- Round 16 of 200: Training 30 Clients ---
+			Corrupted 8 out of 30 clients. 0.194 fraction
+			Round: 16 AvgLoss: 1.881 Norm: 70.46 Time: 0:04:32 Tot_time 1:11:26
+--- Round 17 of 200: Training 30 Clients ---
+			Corrupted 8 out of 30 clients. 0.346 fraction
+			Round: 17 AvgLoss: 1.887 Norm: 71.75 Time: 0:04:19 Tot_time 1:15:45
+--- Round 18 of 200: Training 30 Clients ---
+			Corrupted 8 out of 30 clients. 0.180 fraction
+			Round: 18 AvgLoss: 1.887 Norm: 73.96 Time: 0:05:27 Tot_time 1:21:12
+--- Round 19 of 200: Training 30 Clients ---
+			Corrupted 5 out of 30 clients. 0.043 fraction
+			Round: 19 AvgLoss: 1.856 Norm: 75.70 Time: 0:04:21 Tot_time 1:25:33
+--- Round 20 of 200: Training 30 Clients ---
+			Corrupted 8 out of 30 clients. 0.308 fraction
+			Round: 20 AvgLoss: 1.902 Norm: 76.26 Time: 0:02:29 Tot_time 1:28:02
+20, train_loss: 1.76232, train_accuracy: 0.487825, test_loss: 1.76135, test_accuracy: 0.488325, Time: 0:02:17
+--- Round 21 of 200: Training 30 Clients ---
+			Corrupted 7 out of 30 clients. 0.315 fraction
+			Round: 21 AvgLoss: 1.857 Norm: 78.17 Time: 0:05:40 Tot_time 1:36:00
+--- Round 22 of 200: Training 30 Clients ---
+			Corrupted 8 out of 30 clients. 0.104 fraction
+			Round: 22 AvgLoss: 1.843 Norm: 79.06 Time: 0:02:15 Tot_time 1:38:15
+--- Round 23 of 200: Training 30 Clients ---
+			Corrupted 9 out of 30 clients. 0.409 fraction
+			Round: 23 AvgLoss: 1.900 Norm: 80.22 Time: 0:03:58 Tot_time 1:42:13
+--- Round 24 of 200: Training 30 Clients ---
+			Corrupted 5 out of 30 clients. 0.335 fraction
+			Round: 24 AvgLoss: 1.865 Norm: 80.92 Time: 0:03:46 Tot_time 1:45:59
+--- Round 25 of 200: Training 30 Clients ---
+			Corrupted 12 out of 30 clients. 0.428 fraction
+			Round: 25 AvgLoss: 1.911 Norm: 82.36 Time: 0:04:55 Tot_time 1:50:54
+--- Round 26 of 200: Training 30 Clients ---
+			Corrupted 3 out of 30 clients. 0.020 fraction
+			Round: 26 AvgLoss: 1.800 Norm: 88.73 Time: 0:05:25 Tot_time 1:56:19
+--- Round 27 of 200: Training 30 Clients ---
+			Corrupted 7 out of 30 clients. 0.102 fraction
+			Round: 27 AvgLoss: 1.810 Norm: 90.56 Time: 0:05:38 Tot_time 2:01:57
+--- Round 28 of 200: Training 30 Clients ---
+			Corrupted 7 out of 30 clients. 0.116 fraction
+			Round: 28 AvgLoss: 1.792 Norm: 91.80 Time: 0:04:03 Tot_time 2:06:00
+--- Round 29 of 200: Training 30 Clients ---
+			Corrupted 10 out of 30 clients. 0.298 fraction
+			Round: 29 AvgLoss: 1.827 Norm: 92.72 Time: 0:03:55 Tot_time 2:09:55
+--- Round 30 of 200: Training 30 Clients ---
+			Corrupted 10 out of 30 clients. 0.091 fraction
+			Round: 30 AvgLoss: 1.788 Norm: 93.23 Time: 0:02:10 Tot_time 2:12:05
+--- Round 31 of 200: Training 30 Clients ---
+			Corrupted 8 out of 30 clients. 0.196 fraction
