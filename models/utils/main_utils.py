@@ -8,8 +8,8 @@ import tensorflow as tf
 import time
 from datetime import timedelta
 
-from baseline_constants import AGGR_MEAN, AGGR_GEO_MED
-from baseline_constants import CORRUPTION_OMNISCIENT_KEY, CORRUPTION_FLIP_KEY, CORRUPTION_P_X_KEY
+from baseline_constants import AGGR_MEAN, AGGR_GEO_MED, AGGR_GAUSSIAN
+from baseline_constants import CORRUPTION_OMNISCIENT_KEY, CORRUPTION_FLIP_KEY, CORRUPTION_P_X_KEY, CORRUPTION_OFFLINE_KEY
 from baseline_constants import TRAINING_KEYS
 from client import Client
 
@@ -104,7 +104,7 @@ def parse_args():
                         Choices '{}' or '{}' manipulate the data of the corrupt devices, while choice '{}'
                         leads to corrupt devices to propose an update leading to negation of the update.
                         """.format(CORRUPTION_FLIP_KEY, CORRUPTION_P_X_KEY, CORRUPTION_OMNISCIENT_KEY),
-                        choices=[CORRUPTION_OMNISCIENT_KEY, CORRUPTION_FLIP_KEY, CORRUPTION_P_X_KEY],
+                        choices=[CORRUPTION_OMNISCIENT_KEY, CORRUPTION_FLIP_KEY, CORRUPTION_P_X_KEY, CORRUPTION_OFFLINE_KEY],
                         type=str)
     parser.add_argument('--fraction-corrupt',
                         help="""Fraction of data to corrupt.
@@ -114,7 +114,7 @@ def parse_args():
                         default=0.1)
     parser.add_argument('--aggregation',
                         help='Aggregation technique used to combine updates or gradients',
-                        choices=[AGGR_MEAN, AGGR_GEO_MED],
+                        choices=[AGGR_MEAN, AGGR_GEO_MED, AGGR_GAUSSIAN],
                         default=AGGR_MEAN)
     parser.add_argument('--weiszfeld-maxiter',
                         help="""Number of Weiszfeld iterations used to compute when `--aggregation` 
@@ -176,6 +176,7 @@ def corrupt_one_client_data(dataset, client, corruption):
     """Apply corruption to train data of given client in-place. Note: eval data is unchanged"""
     x = client.train_data['x']
     y = client.train_data['y']
+
     if dataset == 'femnist':
         if corruption == CORRUPTION_FLIP_KEY:
             # flip labels, leave images untouched
@@ -228,7 +229,6 @@ def apply_corruption_all(client_list, dataset, corruption, fraction_corrupt, see
         rng = random.Random(seed - 1)
         users = [client.id for client in client_list]
         rng.shuffle(users)
-
         # choose prefix of `users` to corrupt until fraction has just been exceeded
         num_data_pts = [len(client_dict[u].train_data['y']) for u in users]
         total_num_data_pts = sum(num_data_pts)
@@ -248,7 +248,6 @@ def apply_corruption_all(client_list, dataset, corruption, fraction_corrupt, see
 
     else:
         corrupted_clients = []
-
     return frozenset(corrupted_clients)
 
 
@@ -256,6 +255,8 @@ def get_corrupted_fraction(selected_clients, corrupted_client_ids):
     total_num_pts = sum([len(c.train_data['y']) for c in selected_clients])
     corrupted_lens = [len(c.train_data['y']) for c in selected_clients
                       if c.id in corrupted_client_ids]
+    corrupted_ones = [1 if c.id in corrupted_client_ids else 0 for c in selected_clients]
+    print("corrupted_ones: {}".format(corrupted_ones))
     num_corrupted_clients = len(corrupted_lens)
     num_corrupted_pts = sum(corrupted_lens)
     return (num_corrupted_clients, len(selected_clients),

@@ -32,6 +32,9 @@ TRAINING_KEYS = {OptimLoggingKeys.TRAIN_ACCURACY_KEY,
 CORRUPTION_FLIP_KEY = 'flip'
 CORRUPTION_OMNISCIENT_KEY = 'omniscient'
 CORRUPTION_P_X_KEY = 'p_x'
+CORRUPTION_OFFLINE_KEY = 'offline'
 
 AGGR_MEAN = 'mean'
 AGGR_GEO_MED = 'geom_median'
+AGGR_GAUSSIAN = 'gaussian'
+

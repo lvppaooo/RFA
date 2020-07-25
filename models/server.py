@@ -1,6 +1,7 @@
 import numpy as np
+import tensorflow as tf
 
-from baseline_constants import CORRUPTION_OMNISCIENT_KEY, MAX_UPDATE_NORM
+from baseline_constants import CORRUPTION_OMNISCIENT_KEY, MAX_UPDATE_NORM, CORRUPTION_OFFLINE_KEY
 
 
 class Server:
@@ -29,7 +30,7 @@ class Server:
 
         return [(len(c.train_data['y']), len(c.eval_data['y'])) for c in self.selected_clients]
 
-    def train_model(self, num_epochs=1, batch_size=10, minibatch=None, clients=None, lr=None):
+    def train_model(self, num_epochs=1, batch_size=10, minibatch=None, clients=None, lr=None, corruption=None, corrupted_client_ids=frozenset()):
         """Trains self.model on given clients.
         
         Trains model on self.selected_clients if clients=None;
@@ -51,21 +52,30 @@ class Server:
             bytes_read: number of bytes read by each client from server
                 dictionary with client ids as keys and integer values.
         """
+        print("corruption: {}".format(corruption))
         if clients is None:
             clients = self.selected_clients
         losses = []
         for c in clients:
             self.model.send_to([c])  # reset client model
-
-            comp, num_samples, averaged_loss, update = c.train(num_epochs, batch_size, minibatch, lr)
-            losses.append(averaged_loss)
+            if corruption == 'offline' and c.id in corrupted_client_ids:
+                # print("offline corrupting")
+                # update = c.
+                comp, num_samples, averaged_loss, update = c.train(0, batch_size, None, lr)
+                # update = [c.sess.run(v) for v in tf.compat.v1.trainable_variables()]
+                # update = [np.subtract(update[i], update[i]) for i in range(len(update))]
+                losses.append(averaged_loss)
+            else:
+                comp, num_samples, averaged_loss, update = c.train(num_epochs, batch_size, minibatch, lr)
+                losses.append(averaged_loss)
 
             self.updates.append((num_samples, update))
 
         return np.average(losses, weights=[len(c.train_data['y']) for c in clients]), losses
 
-    def update_model(self, aggregation, corruption=None, corrupted_client_ids=frozenset(), maxiter=4):
+    def update_model(self, aggregation, corruption=None, corrupted_client_ids=frozenset(), maxiter=4, visualize=False):
         is_corrupted = [(client.id in corrupted_client_ids) for client in self.selected_clients]
+        # print("corrupted_client_id: {}".format(corrupted_client_ids))
         if corruption == CORRUPTION_OMNISCIENT_KEY and any(is_corrupted):
             # compute omniscient update
             avg = self.model.weighted_average_oracle([u[1] for u in self.updates], [u[0] for u in self.updates])
@@ -83,6 +93,7 @@ class Server:
 
         num_comm_rounds, is_updated = self.model.update(self.updates, aggregation,
                                                         max_update_norm=MAX_UPDATE_NORM,
+                                                        visualize=visualize,
                                                         maxiter=maxiter)
         self.total_num_comm_rounds += num_comm_rounds
         self.updates = []

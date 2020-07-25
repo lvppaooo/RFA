@@ -22,15 +22,20 @@ class ClientModel(Model):
             kernel_size=[5, 5],
             padding="same",
             activation=tf.nn.relu)
+        print("conv1.shape: {}".format(conv1.shape))
         pool1 = tf.compat.v1.layers.max_pooling2d(inputs=conv1, pool_size=[2, 2], strides=2)
+        print("pool1.shape: {}".format(pool1.shape))
         conv2 = tf.compat.v1.layers.conv2d(
             inputs=pool1,
             filters=64,
             kernel_size=[5, 5],
             padding="same",
             activation=tf.nn.relu)
+        print("conv2.shape: {}".format(conv2.shape))
         pool2 = tf.compat.v1.layers.max_pooling2d(inputs=conv2, pool_size=[2, 2], strides=2)
+        print("pool2.shape: {}".format(pool2.shape))
         pool2_flat = tf.reshape(pool2, [-1, 7 * 7 * 64])
+        print("pool2_flat.shape: {}".format(pool2_flat.shape))
         dense = tf.compat.v1.layers.dense(inputs=pool2_flat, units=2048, activation=tf.nn.relu)
         logits = tf.compat.v1.layers.dense(inputs=dense, units=self.num_classes)
         predictions = {
@@ -44,3 +49,7 @@ class ClientModel(Model):
                 global_step=tf.compat.v1.train.get_global_step())
         eval_metric_ops = tf.math.count_nonzero(tf.equal(labels, predictions["classes"]))
         return features, labels, loss, train_op, eval_metric_ops
+
+if __name__=="__main__":
+    cm = ClientModel(lr=1, num_classes=2)
+    cm.create_model

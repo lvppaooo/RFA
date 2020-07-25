@@ -16,6 +16,7 @@ from model import ServerModel
 from server import Server
 from utils import main_utils as utils
 
+VISUALIZE = False
 
 def main():
     args = utils.parse_args()
@@ -55,6 +56,8 @@ def main():
 
     # Create server
     server = Server(server_model)
+
+    print("args: {}".format(args))
 
     # Create clients
     clients, corrupted_client_ids = utils.setup_clients(args.dataset, args.data_dir, model=client_model,
@@ -108,14 +111,26 @@ def main():
         # Logging selection
         num_corr, num_cl, corr_frac = utils.get_corrupted_fraction(server.selected_clients, corrupted_client_ids)
         print('\t\t\tCorrupted {:d} out of {:d} clients. {:.3f} fraction'.format(
-            num_corr, num_cl, corr_frac), flush=True)
+            num_corr, num_cl, corr_frac), flush=True) 
 
         # Simulate server model training on selected clients' data
         avg_loss, losses = server.train_model(num_epochs=args.num_epochs,
                                               batch_size=args.batch_size,
                                               minibatch=args.minibatch,
-                                              lr=args.lr)
+                                              lr=args.lr,
+                                              corruption=args.corruption,
+                                              corrupted_client_ids=corrupted_client_ids)
 
+        # if VISUALIZE == True:
+        if num_corr/num_cl>0.1 and VISUALIZE == True:
+            server.update_model(aggregation=args.aggregation,
+                                corruption=args.corruption,
+                                corrupted_client_ids=corrupted_client_ids,
+                                maxiter=1,
+                                visualize=True)
+           
+        
+        
         # Update server model
         total_num_comm_rounds, is_updated = server.update_model(aggregation=args.aggregation,
                                                                 corruption=args.corruption,

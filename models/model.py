@@ -2,13 +2,15 @@
 
 from abc import ABC, abstractmethod
 import numpy as np
-import random
+import random, math
 import tensorflow as tf
 
-from baseline_constants import OptimLoggingKeys, AGGR_MEAN, AGGR_GEO_MED
+from baseline_constants import OptimLoggingKeys, AGGR_MEAN, AGGR_GEO_MED, AGGR_GAUSSIAN
 
 from utils.model_utils import batch_data
 from utils.tf_utils import graph_size
+
+from sklearn.decomposition import PCA
 
 
 class Model(ABC):
@@ -201,10 +203,9 @@ class ServerModel:
         for w, p in zip(weights, points):
             for j, weighted_val in enumerate(weighted_updates):
                 weighted_val += (w / tot_weights) * p[j]
-
         return weighted_updates
 
-    def update(self, updates, aggregation=AGGR_MEAN, max_update_norm=None, maxiter=4):
+    def update(self, updates, aggregation=AGGR_MEAN, max_update_norm=None, maxiter=4, visualize=False):
         """Updates server model using given client updates.
 
         Args:
@@ -226,14 +227,28 @@ class ServerModel:
         if len(updates) == 0:
             print('All individual updates rejected. Continuing without update')
             return 1, False
-
+        
         points = [u[1] for u in updates]
         alphas = [u[0] for u in updates]
+        # print("points: shape {} type {}".format(len(points), type(points)))
+        # print("points[0]: shape {} type {}".format(len(points[0]), type(points[0])))
+        # print("points[0][0]: shape {} type {}".format(points[0][0].shape, type(points[0][0])))
+        # print("points[0][1]: shape {} type {}".format(points[0][1].shape, type(points[0][1])))
+        if visualize==True:
+            self.geometric_median_update(points, alphas, maxiter=1, visualize=visualize)
+            self.gaussian_aggregate(self, points, alphas, visualize=visualize)
+            # federated_average_mean = self.weighted_average_oracle(points, alphas)
+            print("Avg Results: {}".format(np.array(alphas)/np.sum(alphas).tolist()))
+            return
+
         if aggregation == AGGR_MEAN:
             weighted_updates = self.weighted_average_oracle(points, alphas)
             num_comm_rounds = 1
         elif aggregation == AGGR_GEO_MED:
-            weighted_updates, num_comm_rounds, _ = self.geometric_median_update(points, alphas, maxiter=maxiter)
+            weighted_updates, num_comm_rounds, _ = self.geometric_median_update(points, alphas, maxiter=maxiter, visualize=visualize)
+        elif aggregation == AGGR_GAUSSIAN:
+            weighted_updates = self.gaussian_aggregate(self, points, alphas, visualize=visualize)
+            num_comm_rounds = 1
         else:
             raise ValueError('Unknown aggregation strategy: {}'.format(aggregation))
 
@@ -262,9 +277,28 @@ class ServerModel:
         self.model.close()
 
     @staticmethod
-    def geometric_median_update(points, alphas, maxiter=4, eps=1e-5, verbose=False, ftol=1e-6):
+    def geometric_median_update(points, alphas, maxiter=4, eps=1e-5, verbose=False, ftol=1e-6, visualize=False):
         """Computes geometric median of atoms with weights alphas using Weiszfeld's Algorithm
         """
+        if visualize==True:
+            # print("PCA start")
+            estimator = PCA(n_components=2)
+            converted = []
+            for pt in points:
+                point_per_client = []
+                for p in pt:
+                    point_per_client.append(np.array(p).flatten().tolist())
+                converted.append(np.array([y for y in p for p in point_per_client]))
+            # p = [pt.flatten().tolist() for pt in points]
+            # print("converted: {}".format(converted))
+            assert len(converted) == len(points)
+            # print("converted[0].shape: {}".format(converted[0].shape))
+            # print("converted[1].shape: {}".format(converted[1].shape))
+            assert converted[0].shape == converted[1].shape
+            pca_x = estimator.fit_transform(converted)
+            # print("PCA end")
+            # print("geometric median after pca: {}".format(pca_x))
+
         alphas = np.asarray(alphas, dtype=points[0][0].dtype) / sum(alphas)
         median = ServerModel.weighted_average_oracle(points, alphas)
         num_oracle_calls = 1
@@ -295,6 +329,8 @@ class ServerModel:
                 print(log_entry)
             if abs(prev_obj_val - obj_val) < ftol * obj_val:
                 break
+        if visualize==True:
+            print("geo median weights: {}".format(weights))
         return median, num_oracle_calls, logs
 
     @staticmethod
@@ -306,3 +342,97 @@ class ServerModel:
     def geometric_median_objective(median, points, alphas):
         """Compute geometric median objective."""
         return sum([alpha * ServerModel.l2dist(median, p) for alpha, p in zip(alphas, points)])
+    
+    @staticmethod
+    def gaussian_aggregate(self, points, weights, visualize=False):
+        """Computes gaussian aggregates 
+
+        Args:
+            points: list, whose weighted average we wish to calculate
+                Each element is a list_of_np.ndarray
+            weights: list of weights of the same length as atoms
+        """
+        client_num = len(points)
+        layer_num = len(points[0])
+        #  print("points: {}".format(points))
+
+        if visualize==True:
+            print("PCA start")
+            estimator = PCA(n_components=2)
+            converted = []
+            for pt in points:
+                point_per_client = []
+                for p in pt:
+                    point_per_client.append(np.array(p).flatten().tolist())
+                converted.append(np.array([y for y in p for p in point_per_client]))
+            # p = [pt.flatten().tolist() for pt in points]
+            # print("converted: {}".format(converted))
+            assert len(converted) == len(points)
+            print("converted[0].shape: {}".format(converted[0].shape))
+            print("converted[1].shape: {}".format(converted[1].shape))
+            assert converted[0].shape == converted[1].shape
+            pca_x = estimator.fit_transform(converted)
+            print("PCA end")
+            print("gaussian aggregation after pca: {}".format(pca_x))
+
+
+
+        server_weights = []
+        with self.model.graph.as_default():
+            all_vars = tf.compat.v1.trainable_variables()
+            for v in all_vars:
+                val = self.model.sess.run(v)
+                server_weights.append(val)
+
+        distances = []
+        gaussian_weight = []
+        miu = []
+        sigma = []
+        def norm(arr):
+            a = np.exp(arr)
+            return a/np.sum(a)
+        # client_weights = []
+        for i_layer in range(layer_num):
+            thislayer = []
+            for i_client in range(client_num):
+                thislayer.append(points[i_client][i_layer])
+            # client_weights.append(thislayer)
+            
+            server_this_layer = server_weights[i_layer]
+            assert(server_this_layer.shape==thislayer[0].shape)
+            assert(len(thislayer)==client_num)
+            # distances.append([ServerModel.l2dist(l.flatten(), server_this_layer.flatten()) for l in thislayer])
+            distances.append([(np.linalg.norm(np.ravel(l) - np.ravel(server_this_layer), ord=2)) for l in thislayer])
+            # if visualize:
+            # print("distance : {}".format(distances[i_layer]))
+            assert(len(distances[i_layer])==client_num)
+            miu.append((np.max(distances[i_layer])+np.min(distances[i_layer]))/2)
+            s = 0
+            for d in distances[i_layer]:
+                s += pow(d-miu[i_layer], 2)
+            s = pow(s, 0.5)
+            sigma.append(s)
+
+            gaussian_weight_thislayer = []
+            for i_client in range(client_num):
+                gaussian_weight_thislayer.append(
+                    math.exp(-pow((distances[i_layer][i_client]-miu[i_layer]),2)/(2*pow(sigma[i_layer], 2)))/(s*pow(2*math.pi, 0.5))
+                )
+            # if visualize:
+            normed_weight = norm(gaussian_weight_thislayer)
+            # print("gaussian before: {}".format(gaussian_weight_thislayer))
+            # print("gaussian normed: {}".format(normed_weight.tolist()))
+            gaussian_weight.append(normed_weight)
+
+        # global_distance = [ServerModel.l2dist(np.array(server_weights).flatten(), np.array(pt).flatten()) for pt in points]
+        # print("global distance: {}".format(global_distance))
+        weighted_updates = [np.zeros_like(v) for v in points[0]]
+        for i_layer in range(layer_num):
+            # 3 parameters: 
+            # client[i]'s parameter: points[i][i_layer]
+            # gaussain parameter: gaussian[i_layer]
+            # sample rate parsameter: weights[i]/tot_weights
+            thislayer_gaussian_weight = gaussian_weight[i_layer]
+            for i_client in range(client_num):
+                weighted_updates[i_layer] += points[i_client][i_layer]*thislayer_gaussian_weight[i_client]
+        return weighted_updates
